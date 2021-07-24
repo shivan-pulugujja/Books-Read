@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Registration Form</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+<body>
+
+<img src="{{ url_for('static', filename='images/registration-banner.png')}}">
+<form action="{{ url_for('register') }}" method="POST">
+    {% if flag %}
+    <div class="error" style="color: red;">You are an existing user please click on login</div>
+    {%else%}
+        <div class="error"></div>
+    {% endif %}
+    <label id="lab" for="uname">User name:</label><br>
+        <input type="text" id="uname" name="uname" required><br>
+    <label id="lab" for="fname">First name:</label><br>
+        <input type="text" id="fname" name="fname" required><br>
+    <label id="lab" for="lname">Last name:</label><br>
+        <input type="text" id="lname" name="lname" required><br>
+    <label id="lab" for="email">Enter your email:</label><br>
+        <input type="email" id="email" name="email" required><br>
+    <label id="lab" for="pwd">Password:</label><br>
+        <input type="password" id="pwd" name="pwd" required><br><br>
+    <div class="text-center">
+        <button class="btn btn-info" type="submit">Submit</button>
+    </div>
+</form> 
+<div class="jumbotron text-center">
+    <h6>Already an existing user? <a href="{{ url_for('login')}}">Login</a></h6>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+
+form{
+    color: black;
+    background-color: #68cd9f;
+    margin-left: 30%;
+    margin-right: 30%;
+    border: 2px solid black;
+    padding: 50px;
+    align-items: center;
+    height: 550px;
+}
+
+#lab{
+    font-size: 25px;
+}
+input{
+    padding: 5px 0px;
+    width: 100%;
+}
+
+button{
+    width: 50%;
+}
+
+img{
+    height: 200px;
+    width: 100%;
+    margin-bottom: 1%;
+}
+
+.navitem{
+    padding: 3px 0px;
+    display: inline-block;
+    color: white;
+}
+
+.tableitems{
+    margin-left: 20%;
+    margin-right: 20%;
+}
