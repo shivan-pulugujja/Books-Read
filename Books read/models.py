@@ -19,5 +19,17 @@ class Bookdetails(db.Model):
     author = db.Column(db.String,nullable=False)
     year = db.Column(db.String,nullable=False)
     
+class reviews(db.Model):
+    __tablename__ = 'reviews'
+    bookId = db.Column(db.String,primary_key=True)
+    uname = db.Column(db.String,primary_key=True)
+    review = db.Column(db.String,nullable=False)
+    rating = db.Column(db.Integer,nullable=False)
+    recorded_time = db.Column(db.DateTime, server_default=db.func.now())
 
+class shelf(db.Model):
+    __tablename__='shelf'
+    bookId = db.Column(db.String,primary_key=True)
+    uname = db.Column(db.String,primary_key=True)
+    bookCount= db.Column(db.Integer,nullable=False)
 

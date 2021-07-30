@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{%block content%}
+
+  <div style="width: 75%; margin: auto; margin-top: 2%;">
+    <table class="table table-hover table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Isbn</th>
+            <th scope="col">Title</th>
+            <th scope="col">Author</th>
+            <th scope="col">Year</th>
+          </tr>
+        </thead>
+        <tbody>
+            {%for book in details%}
+            <tr>
+              <th scope="row">{{book.id}}</th>
+              <td>{{book.title}}</td>
+              <td>{{book.author}}</td>
+              <td>{{book.year}}</td>
+            </tr>
+            {%endfor%}
+        </tbody>
+      </table>
+      <form action="{{url_for('shelfsubmit')}}" method="POST">
+        {%if book_del%}
+          <button type="submit" class="btn btn-warning btn-lg" name='shelf' value='1' id="shelfbutton">Add to Shelf</button>
+        {%else%}
+        <button type="submit" class="btn btn-warning btn-lg" name='shelf' value='1' id="shelfbutton">Remove from Shelf</button>
+        {% endif %}
+
+      </form>
+      {% for mess in get_flashed_messages() %}
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close" class="fade close">
+      <span aria-hidden="true">x</span>
+      </button>
+      {{mess}}
+    </div>
+      {%endfor%}
+      <p class="h3"> Reviews</p>
+      <hr>
+      {%if flag_review%}
+        <form action="{{url_for('review')}}" method="POST">
+          <div class="form-group">
+            <label for="exampleFormControlTextarea1">Add a review</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" name="review" rows="4" required></textarea>
+          </div>
+          <div class="rating">
+              <input type="radio" name="rating" value="5" id="5"><label for="5">☆</label> <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label> <input type="radio" name="rating" value="3" id="3"><label for="3">☆</label> <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label> <input type="radio" name="rating" value="1" id="1" required><label for="1">☆</label>
+          </div>
+          <button class="btn btn-info" style="width: 20%;margin-left: 80%;" type="submit">Submit</button>
+        </form>
+        <hr>
+      {%endif%}
+
+      {%for review in reviews%}
+        <blockquote class="blockquote">
+          <footer class="blockquote-footer float-left">{{review.uname}}, {{review.recorded_time}}</footer>
+          <div class="float-right">
+            {%for i in range(0,5)%}
+              {%if (i < review.rating)%}                
+                <span class="fa fa-star checked"></span>
+              {%else%}
+                <span class="fa fa-star"></span>
+              {%endif%}
+            {%endfor%}
+          </div><br>
+          <p class="mb-0">{{review.review}}</p>
+          
+        </blockquote>
+        <hr>
+      {%endfor%}
+  </div>
+{%endblock%}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{%block content%}
+
+<div style="margin-top: 2%;">
+    <div class="card-deck">
+        {%for each in books%}
+          {%for book in each%}
+            <div class="card">
+              <div class="card-body">
+                <div class="card-header">
+                  <h5 class="card-title"><a href="{{ url_for('get_book_details',id = book.id)}}" target="_blank">{{book.id}}</a></h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">{{book.title}}</li>
+                  <li class="list-group-item">{{book.author}}</li>
+                  <li class="list-group-item">{{book.year}}</li>
+                </ul>
+              </div>
+            </div>
+            {%endfor%}
+        {%endfor%}
+      </div>
+</div>
+{%endblock%}

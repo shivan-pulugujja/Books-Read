@@ -11,7 +11,7 @@
 <div class="jumbotron text-center">
     <h1> Login Page</h1>
     </div>
-<form action="{{ url_for('login') }}" method="POST">
+<form class="registerform" action="{{ url_for('login') }}" method="POST">
     {% if flag %}
     <div class="error" style="color: red;">*Username or password you entered are incorrect. Please try again, if you don't remember password
         click on forgot password</div>
