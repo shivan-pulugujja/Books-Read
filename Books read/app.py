@@ -1,5 +1,5 @@
 from operator import and_
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request, session, jsonify
 from flask.helpers import flash, url_for
 from werkzeug.utils import redirect
 from models import *
@@ -103,18 +103,28 @@ def profile():
 @app.route("/book", methods=["POST","GET"])
 def book():
     if request.method == "POST":
-        det = request.form.get("bookvalue")
+        det = request.form['bookform_data']
+        print("book data = ",det)
         tag = '%'+det+'%'
         book1 = Bookdetails.query.filter(Bookdetails.id.ilike(tag)).all()
         book2 = Bookdetails.query.filter(Bookdetails.title.ilike(tag)).all()
         book3 = Bookdetails.query.filter(Bookdetails.author.ilike(tag)).all()
         book4 = Bookdetails.query.filter(Bookdetails.year.ilike(tag)).all()
-        book = book1+book2+book3+book4
-        if 'username' in session:
-            username = session['username']
-            return render_template("index.html",uname = username,flag = True,books=book)
-        else:
-            return render_template("index.html",flag = False,books=book)
+        books = book1+book2+book3+book4
+        
+        books_dict=[]
+        for each in books:
+            context = {'isbn':each.id, 'Title':each.title,'Author':each.author, 'Year':each.year}
+            # print(context)
+            books_dict.append(context)
+            context={}
+
+        return jsonify(books_dict)
+
+            # username = session['username']
+            # return render_template("index.html",uname = username,flag = True,books=book)
+        # else:
+        #     return render_template("index.html",flag = False,books=book)
 
     else:
         return redirect('home')
@@ -146,7 +156,25 @@ def get_book_details(id):
     
         return render_template('details.html',reviews=total_reviews,uname=user,flag_review=flag_review,flag=True,details=det,book_del = book_del)
     else:
-        return render_template('details.html',reviews=total_reviews,flag_review=flag_review,flag=False,details=det,book_del = book_del)
+        bookdetails=[]
+        for each in det:
+            context = {'isbn':each.id, 'Title':each.title,'Author':each.author, 'Year':each.year}
+            # print(context)
+            bookdetails.append(context)
+            context={}
+        
+        reviews_dict=[]
+        for each in total_reviews:
+            context = {'bookid':each.bookId, 'uname':each.uname,'review':each.review, 'rating':each.rating, 'recorded_time':each.recorded_time}
+            # print(context)
+            reviews_dict.append(context)
+            context={}
+
+
+        payload = {"bookdetais":bookdetails,"reviews_dict":reviews_dict}
+
+        return jsonify(payload)
+        # return render_template('details.html',reviews=total_reviews,flag_review=flag_review,flag=False,details=det,book_del = book_del)
 
 
 @app.route("/review", methods=['POST','GET'])
@@ -242,5 +270,12 @@ def shelfpage():
 
 @app.route("/admin")
 def admin():
-    user = Bookdetails.query.all()
-    return render_template("user.html",users=user)
+    books = Bookdetails.query.all()
+    books_dict=[]
+    for each in books:
+        context = {'isbn':each.id, 'Title':each.title,'Author':each.author, 'Year':each.year}
+        books_dict.append(context)
+        context={}
+    return jsonify(books_dict)
+# @app.route("/jsondata")
+# def jsondata():

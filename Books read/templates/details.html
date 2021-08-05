@@ -11,15 +11,8 @@
             <th scope="col">Year</th>
           </tr>
         </thead>
-        <tbody>
-            {%for book in details%}
-            <tr>
-              <th scope="row">{{book.id}}</th>
-              <td>{{book.title}}</td>
-              <td>{{book.author}}</td>
-              <td>{{book.year}}</td>
-            </tr>
-            {%endfor%}
+        <tbody id="details">
+      
         </tbody>
       </table>
       <form action="{{url_for('shelfsubmit')}}" method="POST">
@@ -54,7 +47,9 @@
         <hr>
       {%endif%}
 
-      {%for review in reviews%}
+      <p id="rev"></p>
+
+      <!-- {%for review in reviews%}
         <blockquote class="blockquote">
           <footer class="blockquote-footer float-left">{{review.uname}}, {{review.recorded_time}}</footer>
           <div class="float-right">
@@ -70,6 +65,6 @@
           
         </blockquote>
         <hr>
-      {%endfor%}
+      {%endfor%} -->
   </div>
 {%endblock%}
